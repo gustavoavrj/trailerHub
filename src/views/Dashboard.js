@@ -40,34 +40,7 @@ const Dashboard=({history}) =>{
                             minHeight: "80vh"
                         }}
                     >
-                        <Form className="login-form">
-
-                            <Form.Item>
-                                <h3>Titulo</h3>
-                                <Input
-                                    name="title"
-                                    placeholder="Titulo"
-                                />
-                            </Form.Item>
-                            <Form.Item>
-                                <h3>Descripcion</h3>
-                                <Input
-                                    name="descripcion"
-                                    placeholder="Descripcion"
-                                />
-                            </Form.Item>
-                            <Form.Item>
-                                <Button
-                                    type="primary"
-                                    htmlType="submit"
-                                    className="login-form-button"
-                                style={{ marginRight: 10 }}
-                                >
-                                Subir
-                                </Button>
-                            </Form.Item>
-
-                        </Form>
+                        
                     </div>
                    
 
