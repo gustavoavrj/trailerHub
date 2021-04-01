@@ -11,6 +11,8 @@ import Errores from '../components/Errores'
 import Footer from '../components/Footer'
 
 const Login = ({ history }) => {
+    const [email, setEmail] = useState("");
+    const [clave, setPassword] = useState("");
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
 
@@ -24,14 +26,19 @@ const Login = ({ history }) => {
             history.push("/");
         }
     }, [history, usuario]);
-
-    const correoClave = async e => {
-        e.preventDefault();
-        const { usuario, clave } = e.target.elements;
+    const onChangeHandler = event => {
+        const { name, value } = event.currentTarget;
+        if (name === "usuario") {
+          setEmail(value);
+        } else if (name === "clave") {
+          setPassword(value);
+        } 
+      };
+    const correoClave = async () => {
 
         await app
             .auth()
-            .signInWithEmailAndPassword(usuario.value, clave.value)
+            .signInWithEmailAndPassword(email, clave)
             .then(result => {
                 console.log(result);
                 history.push("/");
@@ -83,7 +90,7 @@ const Login = ({ history }) => {
                     }}
                 >
                     {!signup ? (
-                        <Form className="login-form" onSubmit={correoClave}>
+                        <Form className="login-form" onFinish={correoClave}>
                             <Form.Item>
                                 <h1>Ingreso</h1>
                             </Form.Item>
@@ -100,6 +107,8 @@ const Login = ({ history }) => {
                                     }
                                     name="usuario"
                                     placeholder="Usuario"
+                                    value={email}
+                                    onChange={event => onChangeHandler(event)}
                                 />
                             </Form.Item>
                             <Form.Item>
@@ -115,6 +124,8 @@ const Login = ({ history }) => {
                                     name="clave"
                                     type="password"
                                     placeholder="Clave"
+                                    value={clave}
+                                    onChange={event => onChangeHandler(event)}
                                 />
                             </Form.Item>
                             <Form.Item>

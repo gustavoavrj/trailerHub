@@ -1,6 +1,9 @@
 import firebase from 'firebase/app'
 import "firebase/auth";
 import "firebase/storage";
+import "firebase/analytics";
+import "firebase/auth";
+import "firebase/firestore";
 
 //import dataConfig from './dataConfig'
 
@@ -17,7 +20,6 @@ const app = firebase.initializeApp(
 
 /*const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();*/
-const storage = firebase.storage();
-export{
-  storage, app as default
-} 
+const storage = app.storage();
+const firestore = app.firestore().collection("Videos");
+export {firestore, storage, app as default}

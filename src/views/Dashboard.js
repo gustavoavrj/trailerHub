@@ -5,6 +5,7 @@ import { Form, Input, Button } from "antd";
 import { Auth } from "../context/AuthContext";
 import { withRouter } from "react-router";
 import Footer from '../components/Footer'
+import ShowVideos from '../components/ShowVideos'
 
 const Dashboard=({history}) =>{
     const { Content } = Layout;
@@ -40,7 +41,7 @@ const Dashboard=({history}) =>{
                             minHeight: "80vh"
                         }}
                     >
-                        
+                        <ShowVideos />
                     </div>
                    
 

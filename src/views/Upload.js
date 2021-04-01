@@ -5,13 +5,14 @@ import { Form, Input, Button } from "antd";
 import { Auth } from "../context/AuthContext";
 import { withRouter } from "react-router";
 import Footer from '../components/Footer'
+import app from '../firebaseConfig'
 
   
 const Upload=({history}) =>{
     const { Content } = Layout;
     const { usuario } = useContext(Auth);
     const [nombre, setnombre] = useState(null)
-  
+    
    
 
     useEffect(() => {
@@ -26,8 +27,7 @@ const Upload=({history}) =>{
 
     
         return (
-            <Layout style={{ height: "100vh",backgroundImage: "URL(https://wallpaperaccess.com/full/752715.jpg)"          
-        }}>
+            <Layout style={{ height: "100vh",backgroundImage: "URL(https://wallpaperaccess.com/full/752715.jpg)"}}>
                 <Header
                     titulo="TrailerHub"
                     subtitulo="Your trailer hub"
