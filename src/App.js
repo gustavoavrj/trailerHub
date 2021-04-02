@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 import Login from "./views/Login";
 import Error from "./views/Error";
-import Upload from "./views/Upload";
+import UploadV from "./views/UploadV";
 import { AuthContext } from "./context/AuthContext";
 
 const App = () => (
@@ -17,7 +17,7 @@ const App = () => (
                     <Dashboard />
                 </Route>
                 <Route exact path="/upload">
-                    <Upload />
+                    <UploadV />
                 </Route>
                 <Route path="*">
                     <Error />

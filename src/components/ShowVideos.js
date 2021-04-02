@@ -1,14 +1,7 @@
-import React, { useEffect, useContext ,Component} from "react";
-import Header from "../components/Header";
-import { Layout } from "antd";
-import { Form, Input, Button } from "antd";
-import { Auth } from "../context/AuthContext";
-import { withRouter } from "react-router";
-import Footer from '../components/Footer'
-import app, {firestore} from '../firebaseConfig'
-
-
-import { Card } from 'antd';
+import React, {Component} from "react";
+import {firestore} from '../firebaseConfig'
+import ReactWebMediaPlayer from 'react-web-media-player';
+import { Card, Row, Col } from 'antd';
 const { Meta } = Card;
 export default class ShowVideos extends Component {
     constructor(props) {
@@ -45,16 +38,21 @@ export default class ShowVideos extends Component {
 
     return (
         <div>
+            <Row gutter={16}>
+
         {console.log(this.Videos)}
         {this.state.Videos.map( video => 
+            <Col span={8}>
             <Card
             hoverable
-            style={{ width: 240 }}
-            cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+            cover={<ReactWebMediaPlayer video={video.url} title={video.titulo} />}
   >
     <Meta title={video.titulo} description={video.descripcion} />
-  </Card>,
+  </Card>
+  </Col>,
             )}
+            </Row>
+
             </div>
         
     );
