@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import Error from "./views/Error";
 import UploadV from "./views/UploadV";
 import { AuthContext } from "./context/AuthContext";
+import VideoComponent from "./views/VideoComponent";
 
 const App = () => (
     <AuthContext>
@@ -15,6 +16,9 @@ const App = () => (
                 </Route>
                 <Route exact path="/">
                     <Dashboard />
+                </Route>
+                <Route exact path="/video/:id">
+                    <VideoComponent />
                 </Route>
                 <Route exact path="/upload">
                     <UploadV />

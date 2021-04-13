@@ -8,7 +8,8 @@ import Footer from '../components/Footer'
 import app, {storage, firestore} from '../firebaseConfig'
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { uuid } from 'uuidv4';
-  
+import VideoThumbnail from 'react-video-thumbnail';
+
 const UploadV=({history}) =>{
     const { Content } = Layout;
     const { usuario } = useContext(Auth);
@@ -17,6 +18,9 @@ const UploadV=({history}) =>{
     const [url, setURL] = useState("");
     const [is_uploaded, setUploaded] = useState(true);
     const [titulo, setTitulo] = useState("");
+    const [thumbnail, setTumbnail] = useState("");
+    const [dthumbnail, setdTumbnail] = useState(null);
+    const [thumbnailurl, setTumbnailurl] = useState("");
     const [descripcion, setDescripcion] = useState("");
 
     useEffect(() => {
@@ -31,6 +35,7 @@ const UploadV=({history}) =>{
     function handleChange(e) {
         setFile(e.file.originFileObj);
       }
+
     const onChangeHandler = event => {
         const { name, value } = event.currentTarget;
         if (name === "titulo") {
@@ -44,10 +49,60 @@ const UploadV=({history}) =>{
          firestore.add({
              titulo,
              descripcion,
-             url
+             url,
+             thumbnail
          }).then(history.push('/'))
          
      }
+     
+     const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+        const byteCharacters = atob(b64Data);
+        const byteArrays = [];
+      
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          const slice = byteCharacters.slice(offset, offset + sliceSize);
+      
+          const byteNumbers = new Array(slice.length);
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+      
+          const byteArray = new Uint8Array(byteNumbers);
+          byteArrays.push(byteArray);
+        }
+      
+        const blob = new Blob(byteArrays, {type: contentType});
+        return blob;
+      }
+
+
+function thumbUpload () {
+    let fileId = uuid()
+    const fileRef = storage.ref('thumbs').child(fileId);
+      const image = fileRef.put(dthumbnail, { customMetadata: { uploadedBy: "myName", fileName: "thumbs" } })
+
+      image.on(
+        'state_changed',
+        (snap) => console.log("progress"),
+        (err) => console.log("error"),
+        () => {console.log("sucess"); storage
+            .ref("thumbs")
+            .child(fileId)
+            .getDownloadURL()
+            .then((url) => {
+              setTumbnailurl(url);
+            })}
+      )
+
+   
+  }
+  const basetoblob = (base64) => 
+  fetch(base64).then(res => res.blob());
+
+      
+  
+
+
       const customUpload = async ({ onError, onSuccess, onProgress }) => {
         let fileId = uuid()
         const fileRef = storage.ref('demo').child(fileId)
@@ -72,6 +127,16 @@ const UploadV=({history}) =>{
         } catch (e) {
           onError(e)
         }
+      }
+      function renderThumb () {
+          if (url != "" ){
+              return <VideoThumbnail
+              videoUrl={url}
+              thumbnailHandler={(thumbnail) => setTumbnail(thumbnail)}
+              width={300}
+              height={200}
+              />;
+          }
       }
     
     
@@ -113,7 +178,6 @@ const UploadV=({history}) =>{
         label="Upload"
         valuePropName="fileList"
         getValueFromEvent={handleChange}
-        extra="longgggggggggggggggggggggggggggggggggg"
       >
         <Upload accept="video/*" name="logo" listType="picture" customRequest={customUpload} >
           <Button icon={<UploadOutlined />}>Click to upload</Button>
@@ -133,7 +197,8 @@ const UploadV=({history}) =>{
                             
 
                         </Form>
-                        <img src={url} alt="" />
+                        {renderThumb()}
+                        
                     </div>
                    
 

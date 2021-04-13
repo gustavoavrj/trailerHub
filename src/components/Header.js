@@ -21,7 +21,7 @@ export default function Header({titulo,subtitulo, username}) {
     <SubMenu key="sub1" icon={<SettingOutlined />} title={username}>
       <Menu.ItemGroup title="Account">
         <Menu.Item key="1"><Link to="/upload">Subir Video</Link></Menu.Item>
-        <Menu.Item key="2">Mis Videos</Menu.Item>
+        <Menu.Item key="2"><Link to="/">Videos</Link></Menu.Item>
       </Menu.ItemGroup>
       <Menu.ItemGroup title="Settings">
       <Menu.Item key="1"><Button onClick={() => app.auth().signOut()} key="logout" type="primary">Cerrar Sesión</Button></Menu.Item>
